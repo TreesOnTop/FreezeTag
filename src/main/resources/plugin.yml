@@ -1,0 +1,4 @@
+name: FreezeTag
+version: '${project.version}'
+main: com.github.zac694.freezetag.FreezeTag
+api-version: 1.16
