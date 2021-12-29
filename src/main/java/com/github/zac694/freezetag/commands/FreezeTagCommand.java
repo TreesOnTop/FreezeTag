@@ -9,6 +9,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 public class FreezeTagCommand {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void register(){
@@ -42,12 +46,12 @@ public class FreezeTagCommand {
                             Bukkit.getOnlinePlayers().forEach(player -> player.removePotionEffect(PotionEffectType.GLOWING));
                             Bukkit.getOnlinePlayers().forEach(player -> player.getInventory().clear());
                             Bukkit.getOnlinePlayers().forEach(player -> player.teleport(new Location(world, x, 128, z, 0, 0)));
+                            List<String> items = new ArrayList<>(ConfigHandler.getConfig().getStringList("FreezerItems"));
                             for(Player p : Bukkit.getOnlinePlayers()){
                                 if(ConfigHandler.getData().getBoolean("freezer." + p.getUniqueId())) {
-                                    p.getInventory().addItem(new ItemStack(Material.STONE_AXE, 1));
-                                    p.getInventory().addItem(new ItemStack(Material.STONE_PICKAXE, 1));
-                                    p.getInventory().addItem(new ItemStack(Material.STONE_SHOVEL, 1));
-                                    p.getInventory().addItem(new ItemStack(Material.COMPASS, 1));
+                                    for(String item : items){
+                                        p.getInventory().addItem(new ItemStack(Objects.requireNonNull(Material.getMaterial(item)), 1));
+                                    }
                                 }
                             }
                             worldBorder.setCenter(x, z);

@@ -1,2 +1,6 @@
 matchtime: 130
 peacetime: 10
+FreezerItems:
+  - STONE_AXE
+  - STONE_PICKAXE
+  - STONE_SHOVEL

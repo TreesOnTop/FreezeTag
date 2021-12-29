@@ -15,6 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitScheduler;
 
+@SuppressWarnings("ConstantConditions")
 public final class FreezeTag extends JavaPlugin {
 
     @Override
@@ -32,6 +33,9 @@ public final class FreezeTag extends JavaPlugin {
         ConfigHandler.save();
         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
         scheduler.scheduleSyncRepeatingTask(mainClass, () -> {
+            if(ConfigHandler.getData().get("time") == null){
+                ConfigHandler.getData().set("time", 0);
+            }
             if(((int)ConfigHandler.getData().get("time"))>((int)ConfigHandler.getConfig().get("matchtime"))){
                 Bukkit.getOnlinePlayers().forEach(player -> ConfigHandler.getData().set("frozen." + player.getUniqueId(), null));
                 Bukkit.getOnlinePlayers().forEach(player -> player.removePotionEffect(PotionEffectType.GLOWING));
