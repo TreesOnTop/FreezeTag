@@ -13,8 +13,8 @@ public class RemoveFreezer {
                 .withPermission("freezetag.removefreezer")
                 .withAliases("rf")
                 .executes((sender, args) -> {
-                    ConfigHandler.getData().set("freezer." + ((Player)args[0]).getUniqueId(), null);
-                    Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage("§b§l[FreezeTag]§r " + ((Player)args[0]).getName() + " has been removed from the freezer team"));
+                    ConfigHandler.getData().set("freezer." + ((Player) args[0]).getUniqueId(), null);
+                    Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage("§b§l[FreezeTag]§r " + ((Player) args[0]).getName() + " has been removed from the freezer team"));
                 }).register();
     }
 }

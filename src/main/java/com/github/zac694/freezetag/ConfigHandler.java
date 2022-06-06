@@ -13,14 +13,14 @@ public class ConfigHandler {
     private static FileConfiguration config;
     private static FileConfiguration data;
 
-    public static void setup(){
+    public static void setup() {
         File configFile = new File(Bukkit.getServer().getPluginManager().getPlugin("FreezeTag").getDataFolder(), "config.yml");
-        if(!configFile.exists()){
+        if (!configFile.exists()) {
             Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("FreezeTag")).saveResource("config.yml", true);
         }
         config = YamlConfiguration.loadConfiguration(configFile);
         File dataFile = new File(Bukkit.getServer().getPluginManager().getPlugin("FreezeTag").getDataFolder(), "data.yml");
-        if(!dataFile.exists()){
+        if (!dataFile.exists()) {
             try {
                 dataFile.createNewFile();
             } catch (IOException e) {
@@ -29,27 +29,33 @@ public class ConfigHandler {
         }
         data = YamlConfiguration.loadConfiguration(dataFile);
     }
-    public static FileConfiguration getConfig(){
+
+    public static FileConfiguration getConfig() {
         return config;
     }
-    public static FileConfiguration getData(){
+
+    public static FileConfiguration getData() {
         return data;
     }
-    public static File getConfigFile(){
+
+    public static File getConfigFile() {
         return new File(Bukkit.getServer().getPluginManager().getPlugin("FreezeTag").getDataFolder(), "config.yml");
     }
-    public static File getDataFile(){
+
+    public static File getDataFile() {
         return new File(Bukkit.getServer().getPluginManager().getPlugin("FreezeTag").getDataFolder(), "data.yml");
     }
-    public static void save(){
-        try{
+
+    public static void save() {
+        try {
             File dataFile = new File(Bukkit.getServer().getPluginManager().getPlugin("FreezeTag").getDataFolder(), "data.yml");
             data.save(dataFile);
-        }catch(IOException e){
+        } catch (IOException e) {
             Bukkit.getConsoleSender().sendMessage("§cUnable to save config");
         }
     }
-    public static void reload(){
+
+    public static void reload() {
         File dataFile = new File(Bukkit.getServer().getPluginManager().getPlugin("FreezeTag").getDataFolder(), "data.yml");
         File configFile = new File(Bukkit.getServer().getPluginManager().getPlugin("FreezeTag").getDataFolder(), "config.yml");
         config = YamlConfiguration.loadConfiguration(configFile);

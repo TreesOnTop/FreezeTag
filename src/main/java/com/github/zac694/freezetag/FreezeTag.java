@@ -18,6 +18,12 @@ import org.bukkit.scheduler.BukkitScheduler;
 @SuppressWarnings("ConstantConditions")
 public final class FreezeTag extends JavaPlugin {
 
+    private static FreezeTag mainClass;
+
+    public static FreezeTag getMainClass() {
+        return mainClass;
+    }
+
     @Override
     public void onEnable() {
         ConfigHandler.setup();
@@ -31,29 +37,30 @@ public final class FreezeTag extends JavaPlugin {
         RemoveFreezer.register();
         ConfigHandler.getData().set("time", ConfigHandler.getConfig().get("matchtime"));
         ConfigHandler.save();
+        Bukkit.getConsoleSender().sendMessage("§aMade by Tree#9562 https://treesontop.tk/bread");
         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
         scheduler.scheduleSyncRepeatingTask(mainClass, () -> {
-            if(ConfigHandler.getData().get("time") == null){
+            if (ConfigHandler.getData().get("time") == null) {
                 ConfigHandler.getData().set("time", 0);
             }
-            if(((int)ConfigHandler.getData().get("time"))>((int)ConfigHandler.getConfig().get("matchtime"))){
+            if (((int) ConfigHandler.getData().get("time")) > ((int) ConfigHandler.getConfig().get("matchtime"))) {
                 Bukkit.getOnlinePlayers().forEach(player -> ConfigHandler.getData().set("frozen." + player.getUniqueId(), null));
                 Bukkit.getOnlinePlayers().forEach(player -> player.removePotionEffect(PotionEffectType.GLOWING));
                 return;
             }
-            String s = String.valueOf(((int)ConfigHandler.getConfig().get("matchtime")) - ((int)ConfigHandler.getData().get("time")));
+            String s = String.valueOf(((int) ConfigHandler.getConfig().get("matchtime")) - ((int) ConfigHandler.getData().get("time")));
             Bukkit.getOnlinePlayers().forEach(player -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(s)));
-            ConfigHandler.getData().set("time", ((int)ConfigHandler.getData().get("time"))+1);
+            ConfigHandler.getData().set("time", ((int) ConfigHandler.getData().get("time")) + 1);
             ConfigHandler.save();
         }, 0, 20);
     }
-    public void onLoad(){
+
+    public void onLoad() {
         CommandAPI.onLoad(new CommandAPIConfig());
     }
+
     @Override
     public void onDisable() {
 
     }
-    private static FreezeTag mainClass;
-    public static FreezeTag getMainClass() { return mainClass; }
 }

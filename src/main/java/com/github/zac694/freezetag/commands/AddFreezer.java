@@ -13,8 +13,8 @@ public class AddFreezer {
                 .withPermission("freezetag.addfreezer")
                 .withAliases("af")
                 .executes((sender, args) -> {
-                    ConfigHandler.getData().set("freezer." + ((Player)args[0]).getUniqueId(), true);
-                    Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage("§b§l[FreezeTag]§r " + ((Player)args[0]).getName() + " has been added to the freezer team"));
-        }).register();
+                    ConfigHandler.getData().set("freezer." + ((Player) args[0]).getUniqueId(), true);
+                    Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage("§b§l[FreezeTag]§r " + ((Player) args[0]).getName() + " has been added to the freezer team"));
+                }).register();
     }
 }

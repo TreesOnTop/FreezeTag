@@ -15,13 +15,13 @@ import java.util.Objects;
 
 public class FreezeTagCommand {
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public static void register(){
+    public static void register() {
         new CommandAPICommand("freezetag")
                 .withArguments(new GreedyStringArgument("string"))
                 .withPermission("freezetag.freezetag")
                 .withAliases("ft")
                 .executesPlayer((sender, args) -> {
-                    String string = (String)args[0];
+                    String string = (String) args[0];
                     switch (string) {
                         case "reload":
                             ConfigHandler.reload();
@@ -47,15 +47,15 @@ public class FreezeTagCommand {
                             Bukkit.getOnlinePlayers().forEach(player -> player.getInventory().clear());
                             Bukkit.getOnlinePlayers().forEach(player -> player.teleport(new Location(world, x, 128, z, 0, 0)));
                             List<String> items = new ArrayList<>(ConfigHandler.getConfig().getStringList("FreezerItems"));
-                            for(Player p : Bukkit.getOnlinePlayers()){
-                                if(ConfigHandler.getData().getBoolean("freezer." + p.getUniqueId())) {
-                                    for(String item : items){
+                            for (Player p : Bukkit.getOnlinePlayers()) {
+                                if (ConfigHandler.getData().getBoolean("freezer." + p.getUniqueId())) {
+                                    for (String item : items) {
                                         p.getInventory().addItem(new ItemStack(Objects.requireNonNull(Material.getMaterial(item)), 1));
                                     }
                                 }
                             }
                             worldBorder.setCenter(x, z);
-                            worldBorder.setSize(50);
+                            worldBorder.setSize(ConfigHandler.getConfig().getInt("WorldBorderSize"));
                             sender.sendMessage("§b§l[FreezeTag]§r Game started");
                             ConfigHandler.getData().set("time", 0);
                             ConfigHandler.save();
